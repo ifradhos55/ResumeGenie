@@ -476,14 +476,14 @@ Answer the user's questions strictly based on this context. Be helpful, concise,
 
             {/* Resume Input */}
             <div className="flex-1 bg-slate-900 rounded-xl shadow-sm border border-slate-800 overflow-hidden flex flex-col min-h-[400px]">
-              <div className="bg-slate-950/50 px-4 py-3 border-b border-slate-800 flex items-center justify-between">
+              <div className="bg-slate-950/50 px-4 py-3 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between">
                 <div className="flex items-center gap-2">
                   <h2 className="font-semibold text-slate-200">Your Resume</h2>
                 </div>
 
                 {/* View Toggle */}
-                <div className="flex bg-slate-950 p-1 rounded-lg">
-                  <label className="flex items-center px-3 py-1.5 text-xs font-medium rounded-md transition-all text-slate-500 hover:text-slate-300 cursor-pointer">
+                <div className="flex flex-wrap sm:flex-nowrap bg-slate-950 p-1 rounded-lg gap-1 mt-2 sm:mt-0">
+                  <label className="flex items-center px-3 py-1.5 text-xs font-medium rounded-md transition-all text-emerald-400/80 animate-pulse hover:text-emerald-300 cursor-pointer">
                     Upload PDF
                     <input type="file" accept="application/pdf" className="hidden" onChange={handleFileUpload} />
                   </label>
@@ -534,30 +534,32 @@ Answer the user's questions strictly based on this context. Be helpful, concise,
               {(!resumeFile) && (
                 <div className="bg-indigo-500/5 border-t border-slate-800 px-4 py-3">
                 {showRewriteUi ? (
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-col sm:flex-row items-center gap-2">
                     <input
                       type="text"
                       value={rewritePrompt}
                       onChange={(e) => setRewritePrompt(e.target.value)}
                       placeholder="e.g., Rewrite the EXPERIENCE section to sound more senior..."
-                      className="flex-1 px-3 py-2 text-sm border border-indigo-500/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-950 text-slate-300 placeholder-slate-600"
+                      className="w-full sm:flex-1 px-3 py-2 text-sm border border-indigo-500/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-950 text-slate-300 placeholder-slate-600"
                       disabled={isRewriting}
                       onKeyDown={(e) => e.key === 'Enter' && rewriteResume()}
                     />
-                    <button
-                      onClick={rewriteResume}
-                      disabled={isRewriting || !rewritePrompt.trim()}
-                      className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-500 disabled:opacity-50 flex items-center shadow-sm whitespace-nowrap"
-                    >
-                      {isRewriting ? "Rewriting..." : "Rewrite"}
-                    </button>
-                    <button
-                      onClick={() => setShowRewriteUi(false)}
-                      className="px-2 py-2 text-sm font-medium text-slate-500 hover:text-rose-400 transition-colors shrink-0"
-                      disabled={isRewriting}
-                    >
-                      Close
-                    </button>
+                    <div className="flex w-full sm:w-auto gap-2">
+                      <button
+                        onClick={rewriteResume}
+                        disabled={isRewriting || !rewritePrompt.trim()}
+                        className="flex-1 sm:flex-none px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-500 disabled:opacity-50 flex items-center justify-center shadow-sm whitespace-nowrap"
+                      >
+                        {isRewriting ? "Rewriting..." : "Rewrite"}
+                      </button>
+                      <button
+                        onClick={() => setShowRewriteUi(false)}
+                        className="px-2 py-2 text-sm font-medium text-slate-500 hover:text-rose-400 transition-colors shrink-0"
+                        disabled={isRewriting}
+                      >
+                        Close
+                      </button>
+                    </div>
                   </div>
                 ) : (
                   <button
